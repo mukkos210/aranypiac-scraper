@@ -2,40 +2,81 @@
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <title>Chimera Aranytömb Árlista</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Argor-Heraeus Aranytömb Árlista</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #f9f9f9; font-family: Arial, sans-serif; padding: 2rem; }
-        .gold-image { width: 80px; border-radius: 8px; }
-        .table th, .table td { vertical-align: middle; }
-        .table td strong { color: #000; font-weight: 600; } /* eladási ár színe fekete */
-        h1 { color: #222; margin-bottom: 2rem; }
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
+            padding: 2rem;
+        }
+        .gold-box {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 2rem;
+            max-width: 1000px;
+            margin: auto;
+        }
+        .gold-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        .gold-item:last-child {
+            border-bottom: none;
+        }
+        .gold-image {
+            width: 60px;
+            height: auto;
+            margin-right: 1rem;
+        }
+        .gold-info {
+            flex: 1;
+        }
+        .gold-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .gold-prices {
+            text-align: right;
+        }
+        .gold-price-label {
+            font-size: 0.85rem;
+            color: #777;
+        }
+        .gold-price-value {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #000;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Argor-Heraeus Aranytömb Árlista</h1>
-        <table class="table table-striped table-bordered">
-            <thead class="table-light">
-                <tr>
-                    <th>Kép</th>
-                    <th>Termék</th>
-                    <th>Visszavásárlási ár</th>
-                    <th>Eladási ár</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in gold_data %}
-                <tr>
-                    <td><img src="{{ url_for('static', filename='images/' + item.image) }}" alt="" class="gold-image"></td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.buy }}</td>
-                    <td><strong>{{ item.final }}</strong></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+
+    <div class="gold-box">
+        <h2 class="mb-4">Valós idejű Argor-Heraeus aranytömb árlista</h2>
+
+        {% for item in gold_data %}
+        <div class="gold-item">
+            <img src="{{ url_for('static', filename='images/' ~ item.image) }}" alt="{{ item.name }}" class="gold-image">
+            <div class="gold-info">
+                <div class="gold-title">{{ item.name }}</div>
+            </div>
+            <div class="gold-prices">
+                <div class="gold-price-label">Visszavásárlási ár</div>
+                <div class="gold-price-value">{{ item.buy }}</div>
+                <div class="gold-price-label mt-2">Eladási ár</div>
+                <div class="gold-price-value">{{ item.final }}</div>
+            </div>
+        </div>
+        {% endfor %}
+
     </div>
+
 </body>
 </html>
 
