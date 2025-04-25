@@ -7,15 +7,20 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 def round_up_to_100(value):
+    """Felfelé kerekít 100-ra"""
     return int((value + 99) // 100 * 100)
 
 def get_image_filename(name):
-    # Képnév meghatározása súly alapján
-    name = name.lower()
-    weight_map = ['1g', '2g', '5g', '10g', '20g', '50g', '100g', '250g', '500g', '1kg', '1oz', 'uncia']
+    """
+    Kép kiválasztása a terméknév alapján
+    """
+    name = name.lower().replace(" ", "").replace(",", ".")  # kisbetű + szóköz eltűnik
+    weight_map = ['1g', '2g', '5g', '10g', '20g', '50g', '100g', '250g', '500g', '1kg', '1oz', '31.1g', 'uncia']
+
     for weight in weight_map:
         if weight in name:
             return f"{weight}.png"
+
     return "default.png"
 
 def scrape_gold_prices():
