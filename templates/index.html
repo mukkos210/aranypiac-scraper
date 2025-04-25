@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Arany árlista – Chimera Ékszer</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #fff; color: #000; margin: 2em; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1em; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background-color: #f5f5f5; }
+    </style>
+</head>
+<body>
+    <h1>Argor-Heraeus aranytömb árlista</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Termék</th>
+                <th>Visszavásárlási ár</th>
+                <th>Eladási ár</th>
+                <th>Chimera ár (6% felár)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in gold_data %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.buy }}</td>
+                <td>{{ item.sell }}</td>
+                <td><strong>{{ item.final }}</strong></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
