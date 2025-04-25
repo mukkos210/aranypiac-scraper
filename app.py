@@ -14,8 +14,17 @@ def get_image_filename(name):
     """
     Kép kiválasztása a terméknév alapján
     """
-    name = name.lower().replace(" ", "").replace(",", ".")  # kisbetű + szóköz eltűnik
-    weight_map = ['1g', '2g', '5g', '10g', '20g', '50g', '100g', '250g', '500g', '1kg', '1oz', '31.1g', 'uncia']
+    name = name.lower().replace(" ", "").replace(",", ".")
+
+    # Külön logika: 1000 gramm → 1kg.png
+    if "1000g" in name or "1000gramm" in name:
+        return "1kg.png"
+
+    # Súlyok, amikhez képfájl tartozhat
+    weight_map = [
+        '1g', '2g', '5g', '10g', '20g', '50g', '100g',
+        '250g', '500g', '1kg', '1oz', '31.1g', 'uncia'
+    ]
 
     for weight in weight_map:
         if weight in name:
