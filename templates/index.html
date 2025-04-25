@@ -8,7 +8,7 @@
         body { background-color: #f9f9f9; font-family: Arial, sans-serif; padding: 2rem; }
         .gold-image { width: 80px; border-radius: 8px; }
         .table th, .table td { vertical-align: middle; }
-        .table td strong { color: #b48a00; font-weight: 600; }
+        .table td strong { color: #000; font-weight: 600; } /* eladási ár színe fekete */
         h1 { color: #222; margin-bottom: 2rem; }
     </style>
 </head>
@@ -27,7 +27,7 @@
             <tbody>
                 {% for item in gold_data %}
                 <tr>
-                    <td><img src="{{ url_for('static', filename='images/' + item.image) }}" alt="aranytömb" class="gold-image"></td>
+                    <td><img src="{{ url_for('static', filename='images/' + item.image) }}" alt="" class="gold-image"></td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.buy }}</td>
                     <td><strong>{{ item.final }}</strong></td>
