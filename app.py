@@ -16,14 +16,18 @@ def get_image_filename(name):
     """
     name = name.lower().replace(" ", "").replace(",", ".")
 
-    # Külön logika: 1000 gramm → 1kg.png
+    # 1000 gramm → 1kg.png
     if "1000g" in name or "1000gramm" in name:
         return "1kg.png"
 
-    # Súlyok, amikhez képfájl tartozhat
+    # 1 uncia → 1oz.png (bármely formában)
+    if "1uncia" in name or "31.1g" in name or "1oz" in name:
+        return "1oz.png"
+
+    # Támogatott súlyok
     weight_map = [
         '1g', '2g', '5g', '10g', '20g', '50g', '100g',
-        '250g', '500g', '1kg', '1oz', '31.1g', 'uncia'
+        '250g', '500g', '1kg'
     ]
 
     for weight in weight_map:
