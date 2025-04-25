@@ -1,10 +1,22 @@
+import os
+import re
 import requests
 from bs4 import BeautifulSoup
 from flask import Flask, render_template
-import re
-from datetime import datetime, timedelta
 
 app = Flask(__name__)
+
+def round_up_to_100(value):
+    return int((value + 99) // 100 * 100)
+
+def get_image_filename(name):
+    # Képnév meghatározása súly alapján
+    name = name.lower()
+    weight_map = ['1g', '2g', '5g', '10g', '20g', '50g', '100g', '250g', '500g', '1kg', '1oz', 'uncia']
+    for weight in weight_map:
+        if weight in name:
+            return f"{weight}.png"
+    return "default.png"
 
 def scrape_gold_prices():
     url = "https://www.aranypiac.hu/arlista"
@@ -34,15 +46,17 @@ def scrape_gold_prices():
                 try:
                     sell_price = int(sell_price)
                     buy_price = int(buy_price) if buy_price else 0
-                    final_price = int(sell_price * 1.06)
+                    final_price = round_up_to_100(sell_price * 1.05)
                 except ValueError:
                     continue
 
+                image_file = get_image_filename(name)
+
                 gold_data.append({
                     "name": name,
-                    "buy": f"{buy_price:,} Ft",
-                    "sell": f"{sell_price:,} Ft",
-                    "final": f"{final_price:,} Ft"
+                    "buy": f"{buy_price:,} Ft".replace(",", " "),
+                    "final": f"{final_price:,} Ft".replace(",", " "),
+                    "image": image_file
                 })
         return gold_data
     except Exception as e:
@@ -55,8 +69,7 @@ def index():
         return f"Hiba történt: {data}"
     return render_template("index.html", gold_data=data)
 
-# 🛠️ Ez kell Renderhez: helyes port binding!
 if __name__ == "__main__":
-    import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
